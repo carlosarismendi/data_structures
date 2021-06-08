@@ -161,7 +161,7 @@ void vector<T>::push_back(const T &element)
 template<typename T>
 void vector<T>::pop_back()
 {
-	if(size_ == 0)
+	if(empty())
 		return;
 
 	if(size_ == 1)
@@ -185,15 +185,22 @@ void vector<T>::pop_back()
 template<typename T>
 void vector<T>::insert(const T &element, const size_t &index)
 {
+	if(index >= size_)
+	{
+		push_back(element);
+		return;
+	}
+
 	if(size_ == capacity_)
 		resize(capacity_ + 1);
 
 	// Moves the items to the right from the given index to create an empty
 	// position for the new element.
-	for(size_t i = size_ - 1; i >= index; ++i)
+	for(size_t i = size_ - 1; i >= index; --i)
 		data_[i + 1] = data_[i];
 
 	data_[index] = element;
+	size_++;
 }
 
 // Remove from the vector the item of at the position size_t.
