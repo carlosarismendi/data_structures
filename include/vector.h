@@ -10,6 +10,7 @@
 
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
+
 template <typename T>
 class vector
 {
@@ -32,7 +33,6 @@ class vector
 		// ============= AUXILIAR METHODS =============
 		// Copy method used in operator= and copy constructor.
 		void copy(const vector<T> &);
-
 
 	public:
 		// Default constructor.
@@ -67,6 +67,9 @@ class vector
 
 		// Return number of items inserted in the vector.
 		inline size_t size() const;
+
+		// Returns a boolean indicating if the vector is empty or not.
+		inline bool empty() const;
 
 		// Insert an item of type T at the end of the vector.
 		void push_back(const T &);
