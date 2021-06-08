@@ -1,15 +1,14 @@
 /**
  * Dynamic vector data structure.
- * Author: Carlos Eduardo Arismendi Sánchez.
+ * Author: Carlos Eduardo Arismendi Sanchez.
  * GitHub: https://github.com/carlosarismendi
  * LinkedIn: https://www.linkedin.com/in/carlos-arismendi/
 */
 
-#include <iostream>
-#include <ostream>
-
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
+#include <iostream>
+#include <ostream>
 
 template <typename T>
 class vector
@@ -21,6 +20,7 @@ class vector
 	friend ostream & operator<<(ostream &, const vector<T> &);
 
 	private:
+		// ============= ATTRIBUTES =============
 		// Number of items inserted in the vector
 		size_t size;
 
@@ -30,11 +30,13 @@ class vector
 		// Datos del vector
 		T *data;
 
+
 		// ============= AUXILIAR METHODS =============
 		// Copy method used in operator= and copy constructor.
 		void copy(const vector<T> &);
 
 	public:
+		// ============= CONSTRUCTORS =============
 		// Default constructor.
 		vector<T>();
 
@@ -47,6 +49,8 @@ class vector
 		// Destructor.
 		~vector<T>();
 
+
+		// ============= OPERATOR OVERLOADS =============
 		// Assignment operator overload.
 		vector<T> & operator=(const vector<T> &);
 
@@ -62,6 +66,8 @@ class vector
 		// R Access[] operator overload.
 		T operator[](const size_t &) const;
 
+
+		// ============= GETTERS =============
 		// Return maximum amount of items that fit into the vector.
 		inline size_t capacity() const;
 
@@ -71,6 +77,8 @@ class vector
 		// Returns a boolean indicating if the vector is empty or not.
 		inline bool empty() const;
 
+
+		// ============= MODIFIERS =============
 		// Insert an item of type T at the end of the vector.
 		void push_back(const T &);
 
