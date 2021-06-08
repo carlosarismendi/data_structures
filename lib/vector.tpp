@@ -141,7 +141,7 @@ inline size_t vector<T>::size() const
 template<typename T>
 inline bool vector<T>::empty() const
 {
-	return (size == 0);
+	return (size_ == 0);
 }
 
 
@@ -154,15 +154,27 @@ void vector<T>::push_back(const T &element)
 		resize(capacity_ + 1);
 
 	data_[size_] = element;
-	size_ += 1;
+	size_++;
 }
 
 // Remove the last item of the vector.
 template<typename T>
-void vector<T>::pop_back(const T &element)
+void vector<T>::pop_back()
 {
+	if(size_ == 0)
+		return;
+
+	if(size_ == 1)
+	{
+		delete[] data_;
+		data_ = nullptr;
+		size_ = 0;
+		capacity_ = 0;
+		return;
+	}
+
 	size_ -= 1;
-	resize(size);
+	// resize(size_ - 1);
 }
 
 /** Insert an item of type T at the indicated position by size_t.
@@ -223,7 +235,7 @@ void vector<T>::resize(const size_t &size)
 	// Vector is empty and just reserves memory
 	if(data_ == nullptr)
 	{
-		data_ = new T[capacity_];
+		data_ = new T[size];
 		capacity_ = size;
 		return;
 	}

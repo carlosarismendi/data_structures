@@ -83,7 +83,7 @@ class vector
 		void push_back(const T &);
 
 		// Remove the last item of the vector.
-		void pop_back(const T &);
+		void pop_back();
 
 		/** Insert an item of type T at the indicated position by size_t.
 		*		If the given index is greater than the capacity of the vector,
