@@ -1,0 +1,13 @@
+******TESTING REDIMENSIONAR, OPERATOR== AND OPERATOR!=******
+true
+true
+5, 5
+[1 (1, 2) 3.00 rojo 2 (1, 2) 3.00 rojo 3 (1, 2) 3.00 rojo 4 (1, 2) 3.00 rojo 5 (1, 2) 3.00 rojo]
+3, 3
+[1 (1, 2) 3.00 rojo 2 (1, 2) 3.00 rojo 3 (1, 2) 3.00 rojo]
+true
+true
+6, 3
+[1 (1, 2) 3.00 rojo 2 (1, 2) 3.00 rojo 3 (1, 2) 3.00 rojo]
+6, 3
+[1 (1, 2) 3.00 rojo 2 (1, 2) 3.00 rojo 3 (1, 2) 3.00 rojo]

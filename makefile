@@ -1,13 +1,21 @@
+.PHONY= doc clean
+
 CC=g++
-OPTIONS= -g -Wall -pedantic -std=c++11
+OPTIONS= -g
 DEBUG= #-D DEBUG
 LIBDIR=lib
 INCLUDEDIR=include
-SRCDIR=src
-TADDIR=tad.cpp
+_OBJ= tporo.o
+OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 
-tad:    $(SRCDIR)/$(TADDIR)
-	$(CC) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) $(SRCDIR)/$(TADDIR) -o tad
+tad:    src/tad.cpp $(OBJ)
+	$(CC) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) src/tad.cpp $(OBJ) -o tad
+
+$(LIBDIR)/%.o : $(LIBDIR)/%.cpp $(INCLUDEDIR)/%.h
+	$(CC) $(OPTIONS) $(DEBUG) -c -I$(INCLUDEDIR) -o $@ $<
+
+doc:
+	doxygen
 
 clean:
-	rm -f tad output/*
+	rm -f $(OBJ) tad */*.out
