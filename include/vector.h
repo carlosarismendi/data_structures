@@ -1,16 +1,23 @@
+/**
+ * Dynamic vector data structure.
+ * Author: Carlos Eduardo Arismendi Sánchez.
+ * GitHub: https://github.com/carlosarismendi
+ * LinkedIn: https://www.linkedin.com/in/carlos-arismendi/
+*/
+
 #include <iostream>
 #include <ostream>
 
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
-
-using namespace std;
-
 template <typename T>
 class vector
 {
-	// Sobrecarga del operador salida
-	friend ostream & operator<<(ostream &os, const vector<T> &);
+	/**
+	 *  operator<< overload. This will call the operator<< of every item of
+	 *	type T in the vector.
+	*/
+	friend ostream & operator<<(ostream &, const vector<T> &);
 
 	private:
 		// Number of items inserted in the vector
@@ -22,28 +29,16 @@ class vector
 		// Datos del vector
 		T *data;
 
-
-		/*---------MÉTODOS AUXILIARES--------*/
-		// Comprueba que se reserva memoria para vector<T>.datos correctamente.
-		// En caso de error, devuelve un mensaje de error (cerr).
-		bool errorReservaMemoria() const;
-
-		//Copia->uso en constructor de copia y operador asignacion
+		// ============= AUXILIAR METHODS =============
+		// Copy method used in operator= and copy constructor.
 		void copy(const vector<T> &);
-		
-		//Elimina los datos de un vector
-		void borrarDatos();
 
-		//Compara los datos de dos vectores
-		bool comparadorDeDatos(const vector<T> &);
 
 	public:
 		// Default constructor.
 		vector<T>();
 
-		/**
-		*		Constructor that only reserves memory for size_t elements of type T.
-		*/
+		// Constructor that only reserves memory for size_t elements of type T.
 		vector<T>(const size_t &);
 
 		// Copy constructor.
