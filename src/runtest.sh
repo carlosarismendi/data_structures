@@ -1,5 +1,5 @@
 
-for FILE in */*.cpp ; do
+for FILE in tlistporo/*.cpp ; do
 	echo "Evaluando $FILE"
 	cp $FILE tad.cpp
 	cd ..
