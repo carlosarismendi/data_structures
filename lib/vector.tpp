@@ -8,7 +8,6 @@
 #include <iostream>
 #include <ostream>
 #include <stdexcept> // std::out_of_range
-#include <algorithm> // std::copy
 #include "vector.h"
 
 
@@ -38,7 +37,10 @@ template<typename T>
 vector<T>::~vector()
 {
 	if(data_ != nullptr)
+	{
 		delete[] data_;
+		data_ = nullptr;
+	}
 
 	size_ = 0;
 	capacity_ = 0;
@@ -229,7 +231,13 @@ template<typename T>
 inline void vector<T>::clear()
 {
 	if(data_ != nullptr)
+	{
 		delete[] data_;
+		data_ = nullptr;
+	}
+
+	capacity_ = 0;
+	size_ = 0;
 }
 
 // Resize vector to be size_t items of type T.
