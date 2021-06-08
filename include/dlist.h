@@ -1,5 +1,5 @@
 /**
- * Bidirectional linked list.
+ * Bidirectional linked list header.
  * Author: Carlos Eduardo Arismendi Sanchez.
  * GitHub: https://github.com/carlosarismendi
  * LinkedIn: https://www.linkedin.com/in/carlos-arismendi/
@@ -14,20 +14,19 @@
  * 	This class represents a node of the linked list (class dlist).
 */
 template <typename T>
+
 class dlistnode
 {
-	friend class dlistnode;
-
 	private:
 		// ============= ATTRIBUTES =============
 		// Node item
 		T e;
 
 		// Previous node in the list
-		dlistnode *previous;
+		dlistnode *previous_;
 
 		// Next node in the list
-		dlistnode *next;
+		dlistnode *next_;
 
 	public:
 		// ============= CONSTRUCTORS =============
@@ -41,6 +40,14 @@ class dlistnode
 		~dlistnode ();
 
 
+		// ============= GETTERS =============
+		// Returns a pointer to the previous node.
+		dlistnode *previous();
+
+		// Returns a pointer to the next node.
+		dlistnode *next();
+
+
 		// ============= OPERATOR OVERLOADS =============
 		// Assignment operator overload
 		dlistnode & operator=(const dlistnode &);
@@ -50,24 +57,22 @@ class dlistnode
 template <typename T>
 class dlist
 {
-	friend class dlistnode;
-
 	/**
 	 *  operator<< overload. This will call the operator<< of every item of
 	 *	type T in the list.
 	*/
-	friend ostream & operator<<(ostream &, const vector<T> &);
+	// friend std::ostream & operator<<(std::ostream &, const vector<T> &);
 
 	private:
 		// ============= ATTRIBUTES =============
 		// First node in the list
-		dlistnode<T> *first;
+		dlistnode<T> *first_;
 
 		// Last node in the list
-		dlistnode<T> *last;
+		dlistnode<T> *last_;
 
 		// Number of items inserted in the list
-		size_t size;
+		size_t size_;
 
 
 		// ============= AUXILIAR METHODS =============

@@ -1,5 +1,5 @@
 /**
- * Dynamic vector data structure.
+ * Dynamic vector data structure header.
  * Author: Carlos Eduardo Arismendi Sanchez.
  * GitHub: https://github.com/carlosarismendi
  * LinkedIn: https://www.linkedin.com/in/carlos-arismendi/
@@ -17,18 +17,18 @@ class vector
 	 *  operator<< overload. This will call the operator<< of every item of
 	 *	type T in the vector.
 	*/
-	friend ostream & operator<<(ostream &, const vector<T> &);
+	// friend std::ostream & operator<<(std::ostream &, const vector<T> &);
 
 	private:
 		// ============= ATTRIBUTES =============
 		// Number of items inserted in the vector
-		size_t size;
+		size_t size_;
 
 		// Maximum amount of items that fit into the vector
-		size_t capacity;
+		size_t capacity_;
 
 		// Datos del vector
-		T *data;
+		T *data_;
 
 
 		// ============= AUXILIAR METHODS =============
@@ -93,7 +93,7 @@ class vector
 		void insert(const T &, const size_t &);
 
 		// Remove from the vector the item of at the position size_t.
-		void erase(const size_t &)
+		void erase(const size_t &);
 
 		// Remove all item from the vector and free the reserved memory.
 		inline void clear();
