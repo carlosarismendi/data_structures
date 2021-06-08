@@ -102,4 +102,5 @@ class vector
 		void resize(const size_t &);
 };
 
+#include "../lib/vector.tpp"
 #endif
