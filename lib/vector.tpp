@@ -284,7 +284,10 @@ void vector<T>::copy(const vector<T> &vec)
 	capacity_ = vec.capacity_;
 
 	if(!this->empty())
+	{
 		delete[] data_;
+		data_ = nullptr;
+	}
 
 	if(vec.empty())
 		return;
