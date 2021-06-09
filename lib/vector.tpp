@@ -21,6 +21,9 @@ vector<T>::vector(): size_(0), capacity_(0), data_(nullptr)
 template<typename T>
 vector<T>::vector(const size_t &size): size_(0), capacity_(size)
 {
+	if(size == 0)
+		throw std::out_of_range("Size can not be <= 0.");
+
 	data_ = new T[size];
 }
 
@@ -280,10 +283,13 @@ void vector<T>::copy(const vector<T> &vec)
 	size_ = vec.size_;
 	capacity_ = vec.capacity_;
 
-	if(data_ != nullptr)
+	if(!this->empty())
 		delete[] data_;
 
-	data_ = new T[vec.size_];
+	if(vec.empty())
+		return;
+
+	data_ = new T[vec.capacity_];
 
 	for( size_t i = 0; i < vec.size_; ++i )
 		data_[i] = vec[i];

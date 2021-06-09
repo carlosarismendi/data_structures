@@ -27,7 +27,6 @@ class vector
 		// Maximum amount of items that fit into the vector
 		size_t capacity_;
 
-		// Datos del vector
 		T *data_;
 
 
