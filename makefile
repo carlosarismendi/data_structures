@@ -11,8 +11,8 @@ OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 tad:    src/tad.cpp $(OBJ)
 	$(CC) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) src/tad.cpp $(OBJ) -o tad
 
-test:    src/tlistporo/tad13.cpp $(OBJ)
-	$(CC) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) src/tlistporo/tad13.cpp $(OBJ) -o test
+test:    src/tlistporo/tad17.cpp $(OBJ)
+	$(CC) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) src/tlistporo/tad17.cpp $(OBJ) -o test
 
 $(LIBDIR)/%.o : $(LIBDIR)/%.cpp $(INCLUDEDIR)/%.h
 	$(CC) $(OPTIONS) $(DEBUG) -c -I$(INCLUDEDIR) -o $@ $<

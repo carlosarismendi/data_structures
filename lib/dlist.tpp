@@ -228,16 +228,16 @@ std::ostream & operator<<(std::ostream &os, const dlist<T> &list)
 // ============= GETTERS =============
 // Returns a reference to the last item in the list.
 template <typename T>
-inline T & dlist<T>::back() const
+inline T dlist<T>::back() const
 {
-  return last_->element;
+  return last_->element_;
 }
 
 // Returns a reference to the first item in the list.
 template <typename T>
-inline T & dlist<T>::front() const
+inline T dlist<T>::front() const
 {
-  return first_->element;
+  return first_->element_;
 }
 
 // Return number of items inserted in the list.

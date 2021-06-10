@@ -72,10 +72,10 @@ class dlist
 
 		// ============= GETTERS =============
 		// Returns a reference to the last item in the list.
-		inline T & back() const;
+		inline T back() const;
 
 		// Returns a reference to the first item in the list.
-		inline T & front() const;
+		inline T front() const;
 
 		// Return number of items inserted in the list.
 		inline size_t size() const;
