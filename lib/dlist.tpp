@@ -336,8 +336,9 @@ void dlist<T>::insert(const T &element, const size_t &index)
 
     iterator->previous_->next_ = newnode;
     iterator->previous_ = newnode;
-  }
 
+    size_++;
+  }
 }
 
 // Removes the last element from the list.

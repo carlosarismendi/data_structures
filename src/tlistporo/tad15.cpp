@@ -24,6 +24,5 @@ main(void)
 
   v.clear();
   cout << v.size() << endl;
-  cout << v.capacity() << endl;;
   cout << v << endl;
 }
