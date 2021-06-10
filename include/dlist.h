@@ -13,55 +13,17 @@
 /**
  * 	This class represents a node of the linked list (class dlist).
 */
+
 template <typename T>
-
-class dlistnode
-{
-	private:
-		// ============= ATTRIBUTES =============
-		// Node item
-		T e;
-
-		// Previous node in the list
-		dlistnode *previous_;
-
-		// Next node in the list
-		dlistnode *next_;
-
-	public:
-		// ============= CONSTRUCTORS =============
-		// Default constructor
-		dlistnode ();
-
-		// Copy constructor
-		dlistnode (const dlistnode &);
-
-		// Destructor
-		~dlistnode ();
-
-
-		// ============= GETTERS =============
-		// Returns a pointer to the previous node.
-		dlistnode *previous();
-
-		// Returns a pointer to the next node.
-		dlistnode *next();
-
-
-		// ============= OPERATOR OVERLOADS =============
-		// Assignment operator overload
-		dlistnode & operator=(const dlistnode &);
-};
-
+class dlistnode;
 
 template <typename T>
 class dlist
 {
-	/**
-	 *  operator<< overload. This will call the operator<< of every item of
-	 *	type T in the list.
-	*/
-	// friend std::ostream & operator<<(std::ostream &, const vector<T> &);
+	friend class dlistnode<T>;
+
+	template<typename A>
+	friend std::ostream & operator<<(std::ostream &, const dlist<A> &);
 
 	private:
 		// ============= ATTRIBUTES =============
@@ -77,7 +39,7 @@ class dlist
 
 		// ============= AUXILIAR METHODS =============
 		// Copy method used in operator= and copy constructor.
-		void copy(const vector<T> &);
+		void copy(const dlist<T> &);
 
 	public:
 		// ============= CONSTRUCTORS =============
@@ -85,7 +47,7 @@ class dlist
 		dlist();
 
 		// Copy constructor.
-		dlist (const dlist &);
+		dlist (const dlist<T> &);
 
 		// Destructor
 		~dlist ();
@@ -93,10 +55,13 @@ class dlist
 
 		// ============= OPERATOR OVERLOADS =============
 		// Assignment operator overload.
-		dlist & operator=(const dlist &);
+		dlist<T> & operator=(const dlist<T> &);
 
 		// Equality operator overload.
-		bool operator==(const dlist &);
+		bool operator==(const dlist<T> &) const;
+
+		// Inequality operator overload.
+		bool operator!=(const dlist<T> &) const;
 
 		// L Access[] operator overload.
 		T & operator[](const size_t &);
@@ -107,10 +72,10 @@ class dlist
 
 		// ============= GETTERS =============
 		// Returns a reference to the last item in the list.
-		T & back() const;
+		inline T & back() const;
 
 		// Returns a reference to the first item in the list.
-		T & front() const;
+		inline T & front() const;
 
 		// Return number of items inserted in the list.
 		inline size_t size() const;
@@ -148,4 +113,49 @@ class dlist
 		inline void clear();
 };
 
+template <typename T>
+class dlistnode
+{
+	friend class dlist<T>;
+	private:
+		// ============= ATTRIBUTES =============
+		// Node item
+		T element_;
+
+		// Previous node in the list
+		dlistnode *previous_;
+
+		// Next node in the list
+		dlistnode *next_;
+
+	public:
+		// ============= CONSTRUCTORS =============
+		// Default constructor
+		dlistnode ();
+
+		// Copy constructor
+		dlistnode (const dlistnode<T> &);
+
+		// Destructor
+		~dlistnode ();
+
+
+		// ============= GETTERS =============
+		// Returns a copy of the element.
+		inline T element() const;
+
+		// Returns a pointer to the previous node.
+		inline dlistnode<T> *previous() const;
+
+		// Returns a pointer to the next node.
+		inline dlistnode<T> *next() const;
+
+
+		// ============= OPERATOR OVERLOADS =============
+		// Assignment operator overload
+		dlistnode<T> & operator=(const dlistnode<T> &);
+};
+
+
+#include "../lib/dlist.tpp"
 #endif
