@@ -3,27 +3,28 @@
 using namespace std;
 
 #include "tporo.h"
-#include "dlist.h"
+#include "vector.h"
 
 int
 main(void)
 {
-  TPoro a(1, 1, 1, (char *)"rojo");
-  TPoro b(2, 2, 2, (char *)"verde");
-  TPoro c(3, 3, 3, (char *)"azul");
-  TPoro d(4, 4, 4, (char *)"marron");
-  TPoro e(5, 5, 5, (char *)"gris");
+  TPoro a(1, 2, 3, (char *)"rojo");
+  vector<TPoro> v(5);
 
-  dlist<TPoro> v;
+  cout << "Cantidad: " << v.size() << endl;
 
   v.push_back(a);
-  v.push_back(b);
-  v.push_back(c);
-  v.push_back(d);
-  v.push_back(e);
+  cout << "Cantidad: " << v.size() << endl;
 
-  cout << v[1] << endl;
-  v[1] = TPoro(9, 9, 9, (char *)"violeta");
+  v.push_back(a);
+  cout << "Cantidad: " << v.size() << endl;
 
-  cout << v[1] << endl;
+  v.push_back(a);
+  cout << "Cantidad: " << v.size() << endl;
+
+  v.push_back(a);
+  cout << "Cantidad: " << v.size() << endl;
+
+  v.push_back(a);
+  cout << "Cantidad: " << v.size() << endl;
 }
