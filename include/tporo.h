@@ -50,6 +50,9 @@ class TPoro
 		// Sobrecarga del operador asignación
 		TPoro & operator=(const TPoro &);	
 
+		// Sobrecarga del operador move
+		TPoro & operator=(TPoro &&);
+
 		// Sobrecarga del operador igualdad
 		bool operator==(const TPoro &);
 

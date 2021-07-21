@@ -32,8 +32,8 @@ TPoro::TPoro(int x, int y, double volumen, char *color)
 	this->y = y;
 	this->volumen = volumen;
 	this->color = NULL;
-	
-	if(color != NULL)
+
+	if (color != NULL)
 	{
 		this->Color(color);
 	}
@@ -52,8 +52,8 @@ TPoro::~TPoro()
 	x = 0;
 	y = 0;
 	volumen = 0;
-	
-	if(color != NULL)
+
+	if (color != NULL)
 	{
 		delete[] color;
 		color = NULL;
@@ -61,14 +61,29 @@ TPoro::~TPoro()
 }
 
 // Sobrecarga del operador asignación
-TPoro & TPoro::operator=(const TPoro &poro)
+TPoro &TPoro::operator=(const TPoro &poro)
 {
-	if(this != &poro)
+	if (this != &poro)
 	{
 		(*this).~TPoro();
 		copiar(poro);
 	}
-	
+
+	return *this;
+}
+
+// Sobrecarga del operador move
+TPoro &TPoro::operator=(TPoro &&poro)
+{
+	if (this != &poro)
+	{
+		x = poro.x;
+		y = poro.y;
+		volumen = poro.volumen;
+		color = poro.color;
+		poro.color = NULL;
+	}
+
 	return *this;
 }
 
@@ -76,16 +91,15 @@ TPoro & TPoro::operator=(const TPoro &poro)
 bool TPoro::operator==(const TPoro &poro)
 {
 	// Un poro tiene el color a NULL y el otro si tiene un color asignado.
-	if((color != NULL && poro.color == NULL) || (color == NULL && poro.color != NULL))
+	if ((color != NULL && poro.color == NULL) || (color == NULL && poro.color != NULL))
 		return false;
 
 	// Ambos poros tienen el color a NULL.
-	if(color == NULL && poro.color == NULL)
+	if (color == NULL && poro.color == NULL)
 		return (x == poro.x && y == poro.y && volumen == poro.volumen);
 
 	// Ambos poros tienen asignado un color.
 	return (x == poro.x && y == poro.y && volumen == poro.volumen && strcmp(this->color, poro.color) == 0);
-
 }
 
 // Sobrecarga del operador desigualdad
@@ -111,13 +125,13 @@ void TPoro::Volumen(double volumen)
 void TPoro::Color(char *color)
 {
 	//El espacio de memoria de color es liberado
-	if(this->color != NULL)
+	if (this->color != NULL)
 	{
 		delete[] this->color;
 		this->color = NULL;
 	}
 
-	if(color != NULL)
+	if (color != NULL)
 		sanitizeAndSetColor(color);
 }
 
@@ -151,14 +165,15 @@ bool TPoro::EsVacio() const
 	return (x == 0 && y == 0 && volumen == 0 && color == NULL);
 }
 
-ostream & operator<<(ostream &os, const TPoro &poro){
-	if(!poro.EsVacio())
+ostream &operator<<(ostream &os, const TPoro &poro)
+{
+	if (!poro.EsVacio())
 	{
 		os.setf(ios::fixed);
 		os.precision(2);
 		os << "(" << poro.x << ", " << poro.y << ") " << poro.volumen << " ";
 
-		if(poro.color != NULL)
+		if (poro.color != NULL)
 		{
 			os << poro.color;
 		}
@@ -171,17 +186,14 @@ ostream & operator<<(ostream &os, const TPoro &poro){
 	{
 		os << "()";
 	}
-	
+
 	return os;
 }
-
-
-
 
 /*---------MÉTODOS AUXILIARES--------*/
 bool TPoro::errorReservaMemoria() const
 {
-	if(color == NULL) 
+	if (color == NULL)
 	{
 		cerr << "ERROR: no se reservó memoria para TPoro.color correctamente." << endl;
 		return true;
@@ -190,23 +202,23 @@ bool TPoro::errorReservaMemoria() const
 	return false;
 }
 
-void TPoro::copiar (const TPoro &poro)
+void TPoro::copiar(const TPoro &poro)
 {
 	x = poro.PosicionX();
 	y = poro.PosicionY();
 	volumen = poro.Volumen();
-	
-	if(poro.Color() != NULL)
+
+	if (poro.Color() != NULL)
 	{
 		int len = strlen(poro.Color());
 
 		color = new char[len + 1];
 
-		if(!errorReservaMemoria())
+		if (!errorReservaMemoria())
 		{
-			strcpy(color, poro.Color());	
+			strcpy(color, poro.Color());
 			color[len] = '\0';
-		}	
+		}
 	}
 	else
 	{
@@ -216,24 +228,24 @@ void TPoro::copiar (const TPoro &poro)
 
 void TPoro::sanitizeAndSetColor(char *color)
 {
-	if(color != NULL)
-	{	
+	if (color != NULL)
+	{
 		//Se crea el nuevo espacio para el nuevo color indicado
 		int colorSize = strlen(color);
 		this->color = new char[colorSize + 1];
 
-		if(!errorReservaMemoria())
+		if (!errorReservaMemoria())
 		{
-			char aux[colorSize+1] = "";
+			char aux[colorSize + 1] = "";
 
-			for(int i = 0; i < colorSize; i++)
-			{	
+			for (int i = 0; i < colorSize; i++)
+			{
 				//Pasa a minúscula el color
 				aux[i] = (char)tolower(color[i]);
 			}
 
 			strcpy(this->color, aux);
 			this->color[colorSize] = '\0';
-		}		
+		}
 	}
 }

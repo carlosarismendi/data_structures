@@ -21,7 +21,7 @@ vector<T>::vector(): size_(0), capacity_(0), data_(nullptr)
 template<typename T>
 vector<T>::vector(const size_t &size): size_(0), capacity_(size)
 {
-	if(size == 0)
+				if(size == 0)
 		throw std::out_of_range("Size can not be <= 0.");
 
 	data_ = new T[size];

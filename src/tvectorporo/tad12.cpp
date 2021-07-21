@@ -17,28 +17,28 @@ main(void)
   vector<TPoro> v;
 
   v.push_back(a);
-  v.push_back(b);
-  v.push_back(c);
-  v.push_back(d);
-  v.push_back(e);
+  // v.push_back(b);
+  // v.push_back(c);
+  // v.push_back(d);
+  // v.push_back(e);
 
-  cout << v.size() << endl; // 5
+  // cout << v.size() << endl; // 5
 
-  v.pop_back();
-  cout << v.size() << endl; // 4
+  // v.pop_back();
+  // cout << v.size() << endl; // 4
 
-  v.pop_back();
-  cout << v.size() << endl; // 3
+  // v.pop_back();
+  // cout << v.size() << endl; // 3
 
-  v.pop_back();
-  cout << v.size() << endl; // 2
+  // v.pop_back();
+  // cout << v.size() << endl; // 2
 
-  v.pop_back();
-  cout << v.size() << endl; // 1
+  // v.pop_back();
+  // cout << v.size() << endl; // 1
 
-  v.pop_back();
-  cout << v.size() << endl; // 0
+  // v.pop_back();
+  // cout << v.size() << endl; // 0
 
-  v.pop_back();
-  cout << v.size() << endl; // 0
+  // v.pop_back();
+  // cout << v.size() << endl; // 0
 }
