@@ -116,7 +116,6 @@ private:
 	pointer_type m_ptr;
 };
 
-// template <typename T, auto m_alloc = std::allocator<T>()>
 template<typename T, typename _Alloc = std::allocator<T> >
 class vector
 {
@@ -171,7 +170,7 @@ public:
 
 	// Destructor.
 	~vector()
-	{
+	{		
 		clear();
 	}
 
@@ -284,13 +283,10 @@ public:
 	{
 		if (m_size >= m_capacity)
 			reserve(2 + m_capacity + m_capacity * 0.5);
-
-		// m_data[m_size] = item;
+		
 		m_alloc.construct(m_data + m_size, item);
 		++m_size;
-
-		LOG("m_size", m_size);
-		LOG("m_capacity", m_capacity);		
+		
 		return { m_data + m_size - 1 };
 	}
 
@@ -346,8 +342,20 @@ public:
 	// Remove from the vector the item of at the position size_t.
 	void erase(const size_t &index)
 	{
-		for (size_t i = index + 1; i < m_size; ++i)
+		if (index >= m_size)
+		{
+			pop_back();
+			return;
+		}
+
+		size_t idx = index;	
+		if (idx < 0)
+			idx = 0;
+
+		m_alloc.destroy(m_data + idx);	
+		for (size_t i = idx + 1; i < m_size; ++i)
 			m_data[i - 1] = std::move(m_data[i]);
+				
 		--m_size;
 	}
 
@@ -402,9 +410,13 @@ private:
 	// ============= AUXILIAR =============
 	void destroy_and_clean_memory()
 	{
+		if (m_data == nullptr)
+			return;
+
 		for(size_t i = 0; i < m_size; ++i)
 			m_alloc.destroy(m_data + i);	
 		m_alloc.deallocate(m_data, m_capacity);
+		m_data = nullptr;	
 	}
 
 private:
