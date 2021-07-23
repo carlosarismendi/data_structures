@@ -247,7 +247,7 @@ inline size_t dlist<T>::size() const
   return size_;
 }
 
-// Returns a boolean indicating if the vector is empty or not.
+// Returns a boolean indicating if the list is empty or not.
 template <typename T>
 inline bool dlist<T>::empty() const
 {
@@ -432,7 +432,7 @@ void dlist<T>::erase(const size_t &index)
 
 }
 
-// Remove all item from the vector and free the reserved memory.
+// Remove all item from the list and free the reserved memory.
 template <typename T>
 inline void dlist<T>::clear()
 {

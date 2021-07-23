@@ -80,7 +80,7 @@ class dlist
 		// Return number of items inserted in the list.
 		inline size_t size() const;
 
-		// Returns a boolean indicating if the vector is empty or not.
+		// Returns a boolean indicating if the list is empty or not.
 		inline bool empty() const;
 
 
@@ -109,7 +109,7 @@ class dlist
 		// Removes the element given by size_t from the list.
 		void erase(const size_t &);
 
-		// Remove all item from the vector and free the reserved memory.
+		// Remove all item from the list and free the reserved memory.
 		inline void clear();
 };
 
