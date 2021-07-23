@@ -22,15 +22,8 @@ main(void)
   v.push_back(d);
   v.push_back(e);
 
-  v.erase(3);
-  cout << v.size() << endl;;
-  cout << v << endl;
-
-  v.erase(1);
-  cout << v.size() << endl;;
-  cout << v << endl;
-
-  v.erase(0);
-  cout << v.size() << endl;;
+  v.clear();
+  cout << v.size() << endl;
+  cout << v.capacity() << endl;;
   cout << v << endl;
 }

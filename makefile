@@ -7,7 +7,7 @@ LIBDIR=lib
 INCLUDEDIR=include
 _OBJ= tporo.o
 OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
-TEST=src/tvectorporo/tad12.cpp
+TEST=src/tvectorporo/tad13.cpp
 
 tad:    src/tad.cpp $(OBJ)
 	$(CC) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) src/tad.cpp $(OBJ) -o tad

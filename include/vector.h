@@ -15,6 +15,13 @@
 // #include <vector>
 // std::vector<int>::iterator a;
 
+#define DEBUG 0
+#if DEBUG == 1
+	#define LOG(msg, x) std::cout << msg << " " << x << std::endl;
+#else
+	#define LOG(msg, x)
+#endif
+
 template <typename vector>
 class vector_iterator
 {
@@ -122,16 +129,18 @@ public:
 public:
 	// ============= CONSTRUCTORS =============
 	// Default constructor.
-	vector()
-		: m_size(0), m_capacity(0), m_data(nullptr)
+	vector(const allocator_type& alloc = allocator_type())
+		: m_size(0), m_capacity(0), m_alloc(alloc), m_data(nullptr)
 	{
 	}
 
 	// Constructor that only reserves memory for size_t elements of type T.
 	vector(const size_t &size, const allocator_type& alloc = allocator_type())
-		: m_size(0), m_capacity(size)
+		: m_size(0), m_capacity(size), m_alloc(alloc)
 	{		
 		m_data = m_alloc.allocate(m_capacity);
+		for(size_t i = 0; i < m_capacity; ++i)
+			m_alloc.construct(m_data + i, T());
 	}
 
 	// Copy constructor.
@@ -172,7 +181,7 @@ public:
 	{
 		if (this != &src)
 		{			
-			clear();
+			destroy_and_clean_memory();
 			m_size = src.m_size;
 			m_capacity = src.m_capacity;
 			
@@ -189,7 +198,7 @@ public:
 	{
 		if (this != &src)
 		{
-			clear();		
+			destroy_and_clean_memory();
 			m_size = src.m_size;
 			m_capacity = src.m_capacity;
 
@@ -274,12 +283,14 @@ public:
 	iterator push_back(const T &item)
 	{
 		if (m_size >= m_capacity)
-			reserve(1 + m_capacity + m_capacity / 2);
+			reserve(2 + m_capacity + m_capacity * 0.5);
 
 		// m_data[m_size] = item;
 		m_alloc.construct(m_data + m_size, item);
 		++m_size;
 
+		LOG("m_size", m_size);
+		LOG("m_capacity", m_capacity);		
 		return { m_data + m_size - 1 };
 	}
 
@@ -288,7 +299,7 @@ public:
 	iterator emplace_back(Args &&...args)
 	{
 		if (m_size >= m_capacity)
-			reserve(1 + m_capacity + m_capacity / 2);
+			reserve(2 + m_capacity + m_capacity * 0.5);
 
 		new (&m_data[m_size]) T(std::forward<Args>(args)...);
 		++m_size;
@@ -312,20 +323,24 @@ public:
 	* 	(same as push_back function).
 	*/
 	iterator insert(const T &item, const size_t &index)
-	{
-		if (index >= m_size)
-			push_back(item);
+	{		
+		if (index >= m_size)		
+			return push_back(item);		
+
+		size_t idx = index;	
+		if (idx < 0)
+			idx = 0;
 
 		if (m_size >= m_capacity)
 			reserve(1 + m_capacity + m_capacity / 2);
 
-		for (size_t i = m_size - 1; i >= index; --i)
+		for (size_t i = m_size - 1; i >= idx; --i)
 			m_data[i + 1] = std::move(m_data[i]);
 
-		m_data[index] = item;
+		m_data[idx] = item;
 		++m_size;
 
-		return { m_data + index };
+		return { m_data + idx };
 	}
 
 	// Remove from the vector the item of at the position size_t.
@@ -339,10 +354,7 @@ public:
 	// Remove all item from the vector and free the reserved memory.
 	void clear()
 	{						
-		for(size_t i = 0; i < m_size; ++i)
-			m_alloc.destroy(m_data + i);	
-		m_alloc.deallocate(m_data, m_capacity);
-
+		destroy_and_clean_memory();
 		m_size = 0;
 		m_capacity = 0;
 	}
@@ -354,14 +366,13 @@ public:
 			return;
 				
 		T* newdata = m_alloc.allocate(size);
-		size_t i = 0;
-		for (; i < m_size; ++i)
+				
+		for (size_t i = 0; i < m_size; ++i)
 			newdata[i] = std::move(m_data[i]);
 		
-		clear();
+		destroy_and_clean_memory();
 		m_data = newdata;
-		m_capacity = size;
-		m_size = i + 1;
+		m_capacity = size;		
 	}
 
 	// Resize vector to be size_t items of type T.
@@ -378,10 +389,22 @@ public:
 		for (size_t i = 0; i < min_size; ++i)
 			newdata[i] = std::move(m_data[i]);
 				
-		clear();
+		for (size_t i = min_size; i < size; ++i)
+			m_alloc.construct(newdata + i, T());
+
+		destroy_and_clean_memory();
 		m_data = newdata;
 		m_capacity = size;
-		m_size = min_size;
+		m_size = size;
+	}
+
+private:
+	// ============= AUXILIAR =============
+	void destroy_and_clean_memory()
+	{
+		for(size_t i = 0; i < m_size; ++i)
+			m_alloc.destroy(m_data + i);	
+		m_alloc.deallocate(m_data, m_capacity);
 	}
 
 private:
