@@ -8,7 +8,7 @@ using namespace std;
 int
 main(void)
 {  
-  vector<TPoro> v(2);
+  vector<TPoro> v(1), w;
 
   v.emplace_back(1, 2, 3, (char *)"rojo");
   v.emplace_back(1, 2, 3, (char *)"rojo");
@@ -16,6 +16,8 @@ main(void)
   v.emplace_back(1, 2, 3, (char *)"rojo");
   v.emplace_back(1, 2, 3, (char *)"rojo");
 
-  for(const auto& value: v)
-    cout << value << endl;
+  w = v;
+
+  cout << v << endl;
+  cout << w << endl;
 }
